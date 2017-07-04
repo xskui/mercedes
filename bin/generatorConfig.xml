@@ -17,14 +17,14 @@
                      <property name="forceBigDecimals" value="false"/>
               </javaTypeResolver>
               <!--生成Model类存放位置-->
-              <javaModelGenerator targetPackage="generated-sources/com/redemption/shawshank" targetProject="target">
+              <javaModelGenerator targetPackage="com.redemption.shawshank.pojo" targetProject="MAVEN">
                      <property name="trimStrings" value="true"/>
               </javaModelGenerator>
               <!--生成映射文件存放位置-->
-              <sqlMapGenerator targetPackage="generated-sources/mapper" targetProject="target"/>
+              <sqlMapGenerator targetPackage="mapper" targetProject="MAVEN"/>
               <!--生成Dao类存放位置-->
-              <javaClientGenerator type="XMLMAPPER" targetPackage="generated-sources/com/redemption/shawshank" targetProject="target">
-                     <property name="enableSubPackages" value="true"/>
+              <javaClientGenerator type="XMLMAPPER" targetPackage="com.redemption.shawshank.dao" targetProject="MAVEN">
+                     <property name="enableSubPackages" value="false"/>
               </javaClientGenerator>
               <!--生成对应表及类名-->
               <table tableName="user" domainObjectName="User" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>
