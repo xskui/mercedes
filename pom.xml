@@ -201,7 +201,7 @@
 
     <build>
         <filters>
-            <filter>src/main/resources/profile/${env}</filter>
+            <filter>filter/${env}</filter>
         </filters>
         <resources>
             <resource>
