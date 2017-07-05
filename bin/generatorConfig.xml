@@ -11,7 +11,7 @@
                      <property name="suppressAllComments" value="true"/>
               </commentGenerator>
               <!--数据库链接地址账号密码-->
-              <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://120.77.202.107/test" userId="root" password="guangzhou123456">
+              <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://120.77.202.107/mercedes_benz" userId="root" password="guangzhou123456">
               </jdbcConnection>
               <javaTypeResolver>
                      <property name="forceBigDecimals" value="false"/>
@@ -27,7 +27,7 @@
                      <property name="enableSubPackages" value="false"/>
               </javaClientGenerator>
               <!--生成对应表及类名-->
-              <table tableName="user" domainObjectName="User"/>
+              <table tableName="sys_organization" domainObjectName="Organization"/>
                      <!--enableCountByExample="false" enableUpdateByExample="false"
                      enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"-->
        </context>

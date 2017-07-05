@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.redemption.shawshank.dao.UserMapper" >
-  <resultMap id="BaseResultMap" type="com.redemption.shawshank.pojo.User" >
+<mapper namespace="com.redemption.shawshank.dao.OrganizationMapper" >
+  <resultMap id="BaseResultMap" type="com.redemption.shawshank.pojo.Organization" >
     <id column="id" property="id" jdbcType="BIGINT" />
-    <result column="organization_id" property="organizationId" jdbcType="BIGINT" />
-    <result column="username" property="username" jdbcType="VARCHAR" />
-    <result column="password" property="password" jdbcType="VARCHAR" />
-    <result column="salt" property="salt" jdbcType="VARCHAR" />
-    <result column="role_ids" property="roleIds" jdbcType="VARCHAR" />
-    <result column="locked" property="locked" jdbcType="SMALLINT" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="parent_id" property="parentId" jdbcType="BIGINT" />
+    <result column="parent_ids" property="parentIds" jdbcType="VARCHAR" />
+    <result column="available" property="available" jdbcType="SMALLINT" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -69,15 +67,15 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, organization_id, username, password, salt, role_ids, locked
+    id, name, parent_id, parent_ids, available
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.redemption.shawshank.pojo.UserExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.redemption.shawshank.pojo.OrganizationExample" >
     select
     <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from sys_user
+    from sys_organization
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -88,105 +86,85 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />
-    from sys_user
+    from sys_organization
     where id = #{id,jdbcType=BIGINT}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
-    delete from sys_user
+    delete from sys_organization
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <delete id="deleteByExample" parameterType="com.redemption.shawshank.pojo.UserExample" >
-    delete from sys_user
+  <delete id="deleteByExample" parameterType="com.redemption.shawshank.pojo.OrganizationExample" >
+    delete from sys_organization
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.redemption.shawshank.pojo.User" >
-    insert into sys_user (id, organization_id, username, 
-      password, salt, role_ids, 
-      locked)
-    values (#{id,jdbcType=BIGINT}, #{organizationId,jdbcType=BIGINT}, #{username,jdbcType=VARCHAR}, 
-      #{password,jdbcType=VARCHAR}, #{salt,jdbcType=VARCHAR}, #{roleIds,jdbcType=VARCHAR}, 
-      #{locked,jdbcType=SMALLINT})
+  <insert id="insert" parameterType="com.redemption.shawshank.pojo.Organization" >
+    insert into sys_organization (id, name, parent_id, 
+      parent_ids, available)
+    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{parentId,jdbcType=BIGINT}, 
+      #{parentIds,jdbcType=VARCHAR}, #{available,jdbcType=SMALLINT})
   </insert>
-  <insert id="insertSelective" parameterType="com.redemption.shawshank.pojo.User" >
-    insert into sys_user
+  <insert id="insertSelective" parameterType="com.redemption.shawshank.pojo.Organization" >
+    insert into sys_organization
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         id,
       </if>
-      <if test="organizationId != null" >
-        organization_id,
+      <if test="name != null" >
+        name,
       </if>
-      <if test="username != null" >
-        username,
+      <if test="parentId != null" >
+        parent_id,
       </if>
-      <if test="password != null" >
-        password,
+      <if test="parentIds != null" >
+        parent_ids,
       </if>
-      <if test="salt != null" >
-        salt,
-      </if>
-      <if test="roleIds != null" >
-        role_ids,
-      </if>
-      <if test="locked != null" >
-        locked,
+      <if test="available != null" >
+        available,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         #{id,jdbcType=BIGINT},
       </if>
-      <if test="organizationId != null" >
-        #{organizationId,jdbcType=BIGINT},
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
       </if>
-      <if test="username != null" >
-        #{username,jdbcType=VARCHAR},
+      <if test="parentId != null" >
+        #{parentId,jdbcType=BIGINT},
       </if>
-      <if test="password != null" >
-        #{password,jdbcType=VARCHAR},
+      <if test="parentIds != null" >
+        #{parentIds,jdbcType=VARCHAR},
       </if>
-      <if test="salt != null" >
-        #{salt,jdbcType=VARCHAR},
-      </if>
-      <if test="roleIds != null" >
-        #{roleIds,jdbcType=VARCHAR},
-      </if>
-      <if test="locked != null" >
-        #{locked,jdbcType=SMALLINT},
+      <if test="available != null" >
+        #{available,jdbcType=SMALLINT},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.redemption.shawshank.pojo.UserExample" resultType="java.lang.Integer" >
-    select count(*) from sys_user
+  <select id="countByExample" parameterType="com.redemption.shawshank.pojo.OrganizationExample" resultType="java.lang.Integer" >
+    select count(*) from sys_organization
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update sys_user
+    update sys_organization
     <set >
       <if test="record.id != null" >
         id = #{record.id,jdbcType=BIGINT},
       </if>
-      <if test="record.organizationId != null" >
-        organization_id = #{record.organizationId,jdbcType=BIGINT},
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
       </if>
-      <if test="record.username != null" >
-        username = #{record.username,jdbcType=VARCHAR},
+      <if test="record.parentId != null" >
+        parent_id = #{record.parentId,jdbcType=BIGINT},
       </if>
-      <if test="record.password != null" >
-        password = #{record.password,jdbcType=VARCHAR},
+      <if test="record.parentIds != null" >
+        parent_ids = #{record.parentIds,jdbcType=VARCHAR},
       </if>
-      <if test="record.salt != null" >
-        salt = #{record.salt,jdbcType=VARCHAR},
-      </if>
-      <if test="record.roleIds != null" >
-        role_ids = #{record.roleIds,jdbcType=VARCHAR},
-      </if>
-      <if test="record.locked != null" >
-        locked = #{record.locked,jdbcType=SMALLINT},
+      <if test="record.available != null" >
+        available = #{record.available,jdbcType=SMALLINT},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -194,50 +172,40 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update sys_user
+    update sys_organization
     set id = #{record.id,jdbcType=BIGINT},
-      organization_id = #{record.organizationId,jdbcType=BIGINT},
-      username = #{record.username,jdbcType=VARCHAR},
-      password = #{record.password,jdbcType=VARCHAR},
-      salt = #{record.salt,jdbcType=VARCHAR},
-      role_ids = #{record.roleIds,jdbcType=VARCHAR},
-      locked = #{record.locked,jdbcType=SMALLINT}
+      name = #{record.name,jdbcType=VARCHAR},
+      parent_id = #{record.parentId,jdbcType=BIGINT},
+      parent_ids = #{record.parentIds,jdbcType=VARCHAR},
+      available = #{record.available,jdbcType=SMALLINT}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.redemption.shawshank.pojo.User" >
-    update sys_user
+  <update id="updateByPrimaryKeySelective" parameterType="com.redemption.shawshank.pojo.Organization" >
+    update sys_organization
     <set >
-      <if test="organizationId != null" >
-        organization_id = #{organizationId,jdbcType=BIGINT},
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
       </if>
-      <if test="username != null" >
-        username = #{username,jdbcType=VARCHAR},
+      <if test="parentId != null" >
+        parent_id = #{parentId,jdbcType=BIGINT},
       </if>
-      <if test="password != null" >
-        password = #{password,jdbcType=VARCHAR},
+      <if test="parentIds != null" >
+        parent_ids = #{parentIds,jdbcType=VARCHAR},
       </if>
-      <if test="salt != null" >
-        salt = #{salt,jdbcType=VARCHAR},
-      </if>
-      <if test="roleIds != null" >
-        role_ids = #{roleIds,jdbcType=VARCHAR},
-      </if>
-      <if test="locked != null" >
-        locked = #{locked,jdbcType=SMALLINT},
+      <if test="available != null" >
+        available = #{available,jdbcType=SMALLINT},
       </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.redemption.shawshank.pojo.User" >
-    update sys_user
-    set organization_id = #{organizationId,jdbcType=BIGINT},
-      username = #{username,jdbcType=VARCHAR},
-      password = #{password,jdbcType=VARCHAR},
-      salt = #{salt,jdbcType=VARCHAR},
-      role_ids = #{roleIds,jdbcType=VARCHAR},
-      locked = #{locked,jdbcType=SMALLINT}
+  <update id="updateByPrimaryKey" parameterType="com.redemption.shawshank.pojo.Organization" >
+    update sys_organization
+    set name = #{name,jdbcType=VARCHAR},
+      parent_id = #{parentId,jdbcType=BIGINT},
+      parent_ids = #{parentIds,jdbcType=VARCHAR},
+      available = #{available,jdbcType=SMALLINT}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

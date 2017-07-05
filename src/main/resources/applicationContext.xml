@@ -18,5 +18,7 @@
        <context:annotation-config/>
 
        <import resource="classpath*:conf/db-config.xml"/>
+       <import resource="classpath:conf/shiro-config.xml"/>
+       <import resource="classpath:conf/spring-cache-config.xml"/>
 
 </beans>

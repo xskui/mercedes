@@ -1,86 +1,77 @@
 package com.redemption.shawshank.pojo;
 
 public class User {
-    private Integer id;
+    private Long id;
 
-    private String name;
+    private Long organizationId;
 
-    private String icon;
+    private String username;
 
-    private String sex;
+    private String password;
 
-    private Integer birthday;
+    private String salt;
 
-    private Boolean status;
+    private String roleIds;
 
-    private Integer registerTs;
+    private Short locked;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public Long getOrganizationId() {
+        return organizationId;
     }
 
-    public void setName(String name) {
-        this.name = name == null ? null : name.trim();
+    public void setOrganizationId(Long organizationId) {
+        this.organizationId = organizationId;
     }
 
-    public String getIcon() {
-        return icon;
+    public String getUsername() {
+        return username;
     }
 
-    public void setIcon(String icon) {
-        this.icon = icon == null ? null : icon.trim();
+    public void setUsername(String username) {
+        this.username = username == null ? null : username.trim();
     }
 
-    public String getSex() {
-        return sex;
+    public String getPassword() {
+        return password;
     }
 
-    public void setSex(String sex) {
-        this.sex = sex == null ? null : sex.trim();
+    public void setPassword(String password) {
+        this.password = password == null ? null : password.trim();
     }
 
-    public Integer getBirthday() {
-        return birthday;
+    public String getSalt() {
+        return salt;
     }
 
-    public void setBirthday(Integer birthday) {
-        this.birthday = birthday;
+    public void setSalt(String salt) {
+        this.salt = salt == null ? null : salt.trim();
     }
 
-    public Boolean getStatus() {
-        return status;
+    public String getRoleIds() {
+        return roleIds;
     }
 
-    public void setStatus(Boolean status) {
-        this.status = status;
+    public void setRoleIds(String roleIds) {
+        this.roleIds = roleIds == null ? null : roleIds.trim();
     }
 
-    public Integer getRegisterTs() {
-        return registerTs;
+    public Short getLocked() {
+        return locked;
     }
 
-    public void setRegisterTs(Integer registerTs) {
-        this.registerTs = registerTs;
+    public void setLocked(Short locked) {
+        this.locked = locked;
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", icon='" + icon + '\'' +
-                ", sex='" + sex + '\'' +
-                ", birthday=" + birthday +
-                ", status=" + status +
-                ", registerTs=" + registerTs +
-                '}';
+    public String getCredentialsSalt() {
+        return username + salt;
     }
 }
