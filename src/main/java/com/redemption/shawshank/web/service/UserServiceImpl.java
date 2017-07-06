@@ -42,13 +42,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User updateUser(User user) {
-        return null;
+    public Integer updateUser(User user) {
+        if (user == null || user.getId() == null){
+            return null;
+        }
+        return userMapper.updateByPrimaryKey(user);
     }
 
     @Override
-    public void deleteUser(Long userId) {
-
+    public Integer deleteUser(Long userId) {
+        if (userId == null){
+            return null;
+        }
+        return userMapper.deleteByPrimaryKey(userId);
     }
 
     @Override
@@ -58,6 +64,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findOne(Long userId) {
+        if (userId == null){
+            return null;
+        }
         return userMapper.selectByPrimaryKey(userId);
     }
 
@@ -68,6 +77,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findByUsername(String username) {
+
+        if (StringUtils.isEmpty(username))return null;
         UserExample example = new UserExample();
         example.createCriteria().andUsernameEqualTo(username);
         List<User> list = userMapper.selectByExample(example);

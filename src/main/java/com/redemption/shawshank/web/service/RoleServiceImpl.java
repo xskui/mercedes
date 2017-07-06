@@ -18,22 +18,22 @@ import java.util.*;
 public class RoleServiceImpl implements RoleService {
 
 
-    @Autowired
+    @Autowired(required = false)
     private RoleMapper roleMapper;
 
     @Override
-    public Role createRole(Role role) {
-        return null;
+    public Integer createRole(Role role) {
+        return roleMapper.insert(role);
     }
 
     @Override
-    public Role updateRole(Role role) {
-        return null;
+    public Integer updateRole(Role role) {
+        return roleMapper.updateByPrimaryKey(role);
     }
 
     @Override
-    public void deleteRole(Long roleId) {
-
+    public Integer deleteRole(Long roleId) {
+        return roleMapper.deleteByPrimaryKey(roleId);
     }
 
     @Override

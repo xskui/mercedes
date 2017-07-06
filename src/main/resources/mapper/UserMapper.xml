@@ -9,6 +9,12 @@
     <result column="salt" property="salt" jdbcType="VARCHAR" />
     <result column="role_ids" property="roleIds" jdbcType="VARCHAR" />
     <result column="locked" property="locked" jdbcType="SMALLINT" />
+    <result column="mobile" property="mobile" jdbcType="VARCHAR" />
+    <result column="sex" property="sex" jdbcType="SMALLINT" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="realname" property="realname" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -69,7 +75,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, organization_id, username, password, salt, role_ids, locked
+    id, organization_id, username, password, salt, role_ids, locked, mobile, sex, email, 
+    realname, create_time, update_time
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.redemption.shawshank.pojo.UserExample" >
     select
@@ -104,10 +111,14 @@
   <insert id="insert" parameterType="com.redemption.shawshank.pojo.User" >
     insert into sys_user (id, organization_id, username, 
       password, salt, role_ids, 
-      locked)
+      locked, mobile, sex, 
+      email, realname, create_time, 
+      update_time)
     values (#{id,jdbcType=BIGINT}, #{organizationId,jdbcType=BIGINT}, #{username,jdbcType=VARCHAR}, 
       #{password,jdbcType=VARCHAR}, #{salt,jdbcType=VARCHAR}, #{roleIds,jdbcType=VARCHAR}, 
-      #{locked,jdbcType=SMALLINT})
+      #{locked,jdbcType=SMALLINT}, #{mobile,jdbcType=VARCHAR}, #{sex,jdbcType=SMALLINT}, 
+      #{email,jdbcType=VARCHAR}, #{realname,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.redemption.shawshank.pojo.User" >
     insert into sys_user
@@ -133,6 +144,24 @@
       <if test="locked != null" >
         locked,
       </if>
+      <if test="mobile != null" >
+        mobile,
+      </if>
+      <if test="sex != null" >
+        sex,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="realname != null" >
+        realname,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -155,6 +184,24 @@
       </if>
       <if test="locked != null" >
         #{locked,jdbcType=SMALLINT},
+      </if>
+      <if test="mobile != null" >
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        #{sex,jdbcType=SMALLINT},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="realname != null" >
+        #{realname,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -188,6 +235,24 @@
       <if test="record.locked != null" >
         locked = #{record.locked,jdbcType=SMALLINT},
       </if>
+      <if test="record.mobile != null" >
+        mobile = #{record.mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sex != null" >
+        sex = #{record.sex,jdbcType=SMALLINT},
+      </if>
+      <if test="record.email != null" >
+        email = #{record.email,jdbcType=VARCHAR},
+      </if>
+      <if test="record.realname != null" >
+        realname = #{record.realname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -201,7 +266,13 @@
       password = #{record.password,jdbcType=VARCHAR},
       salt = #{record.salt,jdbcType=VARCHAR},
       role_ids = #{record.roleIds,jdbcType=VARCHAR},
-      locked = #{record.locked,jdbcType=SMALLINT}
+      locked = #{record.locked,jdbcType=SMALLINT},
+      mobile = #{record.mobile,jdbcType=VARCHAR},
+      sex = #{record.sex,jdbcType=SMALLINT},
+      email = #{record.email,jdbcType=VARCHAR},
+      realname = #{record.realname,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -227,6 +298,24 @@
       <if test="locked != null" >
         locked = #{locked,jdbcType=SMALLINT},
       </if>
+      <if test="mobile != null" >
+        mobile = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        sex = #{sex,jdbcType=SMALLINT},
+      </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="realname != null" >
+        realname = #{realname,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
@@ -237,7 +326,13 @@
       password = #{password,jdbcType=VARCHAR},
       salt = #{salt,jdbcType=VARCHAR},
       role_ids = #{roleIds,jdbcType=VARCHAR},
-      locked = #{locked,jdbcType=SMALLINT}
+      locked = #{locked,jdbcType=SMALLINT},
+      mobile = #{mobile,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=SMALLINT},
+      email = #{email,jdbcType=VARCHAR},
+      realname = #{realname,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

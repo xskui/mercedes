@@ -23,13 +23,13 @@ public interface UserService {
      * @param user
      * @return
      */
-    User updateUser(User user);
+    Integer updateUser(User user);
 
     /**
      * 删除用户
      * @param userId
      */
-    void deleteUser(Long userId);
+    Integer deleteUser(Long userId);
 
     /**
      * 修改密码

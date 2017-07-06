@@ -12,11 +12,11 @@ import java.util.Set;
  */
 public interface RoleService {
 
-    Role createRole(Role role);
+    Integer createRole(Role role);
 
-    Role updateRole(Role role);
+    Integer updateRole(Role role);
 
-    void deleteRole(Long roleId);
+    Integer deleteRole(Long roleId);
 
     Role findOne(Long roleId);
 

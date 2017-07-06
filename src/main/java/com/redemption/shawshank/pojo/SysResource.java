@@ -1,5 +1,7 @@
 package com.redemption.shawshank.pojo;
 
+import java.util.Date;
+
 public class SysResource {
     private Long id;
 
@@ -16,6 +18,10 @@ public class SysResource {
     private String permission;
 
     private Short available;
+
+    private Date createTime;
+
+    private Date updateTime;
 
     public Long getId() {
         return id;
@@ -79,5 +85,21 @@ public class SysResource {
 
     public void setAvailable(Short available) {
         this.available = available;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
     }
 }

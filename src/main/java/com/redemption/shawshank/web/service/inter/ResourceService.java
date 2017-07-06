@@ -1,7 +1,9 @@
 package com.redemption.shawshank.web.service.inter;
 
 import com.redemption.shawshank.pojo.SysResource;
+import com.redemption.shawshank.pojo.SysResourceExample;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -46,4 +48,10 @@ public interface ResourceService {
      * @return
      */
     Set<String> findPermissions(Set<String> resourceId);
+
+    /**
+     * 查询所有的记录，需要做分页
+     * @return
+     */
+    List<SysResource> findAll(SysResourceExample example);
 }
