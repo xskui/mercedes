@@ -45,5 +45,5 @@ public interface ResourceService {
      * @param resourceId 资源id
      * @return
      */
-    Set<String> findPermissions(Set<Long> resourceId);
+    Set<String> findPermissions(Set<String> resourceId);
 }

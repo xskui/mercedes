@@ -19,8 +19,7 @@
 <% Exception e = (Exception)request.getAttribute("ex"); %>
 <h2>错误: <%= e.getClass().getSimpleName()%></h2>
 <hr />
-<h5>错误描述：</h5>
-<p><%= e.getMessage()%></p>
+<h5>错误描述：权限不足</h5>
 </c:if>
 </body>
 </html>

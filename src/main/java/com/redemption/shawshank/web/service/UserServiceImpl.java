@@ -4,10 +4,15 @@ import com.redemption.shawshank.dao.UserMapper;
 import com.redemption.shawshank.pojo.User;
 import com.redemption.shawshank.pojo.UserExample;
 import com.redemption.shawshank.utils.security.PasswordHelper;
+import com.redemption.shawshank.web.service.inter.ResourceService;
+import com.redemption.shawshank.web.service.inter.RoleService;
 import com.redemption.shawshank.web.service.inter.UserService;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -19,10 +24,14 @@ import java.util.Set;
 @Service
 public class UserServiceImpl implements UserService {
 
-    @Autowired
+    @Autowired(required = false)
     private UserMapper userMapper;
     @Autowired
     private PasswordHelper passwordHelper;
+    @Autowired
+    private RoleService roleService;
+    @Autowired
+    private ResourceService resourceService;
 
 
     @Override
@@ -49,7 +58,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findOne(Long userId) {
-        return null;
+        return userMapper.selectByPrimaryKey(userId);
     }
 
     @Override
@@ -72,11 +81,30 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Set<String> findRoles(String username) {
-        return null;
+        Set<String> set = new HashSet<String>();
+        User user = findByUsername(username);
+
+        if (user != null && StringUtils.isNotEmpty(user.getRoleIds()) ){
+            String[] rolesArr = user.getRoleIds().split(",");
+            for (String str : rolesArr){
+                set.add(roleService.findRoles(Long.parseLong(str)));
+            }
+        }
+        return set;
     }
 
     @Override
     public Set<String> findPermissions(String username) {
-        return null;
+        Set<String> set = new HashSet<String>();
+        User user = findByUsername(username);
+
+        if (user != null && StringUtils.isNotEmpty(user.getRoleIds())){
+
+            String[] arr = user.getRoleIds().split(",");
+            for (String str : arr){
+                set.addAll(resourceService.findPermissions(roleService.findPermissions(Long.parseLong(str))));
+            }
+        }
+        return set;
     }
 }

@@ -12,6 +12,6 @@
 <title><spring:message code="404"/></title>
 </head>
 <body>
-404
+404 页面没有找到
 </body>
 </html>

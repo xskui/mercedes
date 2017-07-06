@@ -1,5 +1,6 @@
 package com.redemption.shawshank.web.controller;
 
+import com.redemption.shawshank.web.base.BaseController;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.slf4j.Logger;
@@ -16,7 +17,7 @@ import javax.servlet.http.HttpServletRequest;
  * Desc :
  */
 @Controller
-public class LoginController {
+public class LoginController extends BaseController{
 
     private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
 

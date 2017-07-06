@@ -4,6 +4,7 @@ import com.redemption.shawshank.dao.SysResourceMapper;
 import com.redemption.shawshank.pojo.SysResource;
 import com.redemption.shawshank.web.service.inter.ResourceService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -13,6 +14,7 @@ import java.util.Set;
  * Date : 2017/7/5.
  * Desc :
  */
+@Service
 public class ResourceServiceImpl implements ResourceService{
 
     @Autowired(required = false)
@@ -40,11 +42,10 @@ public class ResourceServiceImpl implements ResourceService{
     }
 
     @Override
-    public Set<String> findPermissions(Set<Long> resourceId) {
+    public Set<String> findPermissions(Set<String> resourceId) {
         Set<String> set = new HashSet<String>();
-
-        for (long id : resourceId){
-            set.add(findone(id).getPermission());
+        for (String id : resourceId){
+            set.add(findone(Long.parseLong(id)).getPermission());
         }
         return set;
     }

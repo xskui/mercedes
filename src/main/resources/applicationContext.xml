@@ -17,6 +17,21 @@
 
        <context:annotation-config/>
 
+       <!-- i18n国际化 -->
+       <bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+              <!-- 找不到key时用key作为返回值 -->
+              <property name="useCodeAsDefaultMessage" value="false"/>
+              <!-- 资源刷新时间 -->
+              <property name="cacheSeconds" value="60"/>
+              <!-- 资源文件列表 -->
+              <property name="basenames">
+                     <list>
+                            <value>/WEB-INF/i18n/messages</value>
+                     </list>
+              </property>
+              <property name="defaultEncoding" value="UTF-8"/>
+       </bean>
+
        <import resource="classpath*:conf/db-config.xml"/>
        <import resource="classpath:conf/shiro-config.xml"/>
        <import resource="classpath:conf/spring-cache-config.xml"/>
