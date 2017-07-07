@@ -16,7 +16,11 @@
        </context:component-scan>
 
        <!--注解-->
-       <mvc:annotation-driven/>
+       <mvc:annotation-driven>
+              <mvc:argument-resolvers>
+                     <bean class="com.redemption.shawshank.utils.method.CurrentUserMethodArgumentResolver"/>
+              </mvc:argument-resolvers>
+       </mvc:annotation-driven>
        <!--静态资源-->
        <mvc:default-servlet-handler/>
 

@@ -54,4 +54,11 @@ public interface ResourceService {
      * @return
      */
     List<SysResource> findAll(SysResourceExample example);
+
+    /**
+     *查权限菜单
+     * @param permissions
+     * @return
+     */
+    List<SysResource> findmenus(Set<String> permissions);
 }

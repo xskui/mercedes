@@ -102,4 +102,8 @@ public class SysResource {
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
     }
+
+    public boolean isRootNode(){
+        return parentId == 0;
+    }
 }

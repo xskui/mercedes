@@ -44,7 +44,7 @@ public class UserController extends BaseController{
         return userMapper.selectByExample(example).get(0).toString();
     }
 
-    @RequiresPermissions("index")
+    @RequiresPermissions("user:add")
     @RequestMapping(value = "/add",method = RequestMethod.POST)
     @ResponseBody
     public String addUser(@RequestBody User user){
