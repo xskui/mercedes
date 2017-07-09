@@ -3,11 +3,15 @@ package com.redemption.shawshank.web.service;
 import com.redemption.shawshank.dao.UserMapper;
 import com.redemption.shawshank.pojo.User;
 import com.redemption.shawshank.pojo.UserExample;
+import com.redemption.shawshank.utils.enums.ServerCodeEnum;
 import com.redemption.shawshank.utils.security.PasswordHelper;
+import com.redemption.shawshank.web.base.ResponBean;
 import com.redemption.shawshank.web.service.inter.ResourceService;
 import com.redemption.shawshank.web.service.inter.RoleService;
 import com.redemption.shawshank.web.service.inter.UserService;
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +28,8 @@ import java.util.Set;
 @Service
 public class UserServiceImpl implements UserService {
 
+    private static final Logger log = LoggerFactory.getLogger(UserServiceImpl.class);
+
     @Autowired(required = false)
     private UserMapper userMapper;
     @Autowired
@@ -35,27 +41,52 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public Integer createUser(User user) {
+    public ResponBean createUser(User user) {
         //密码
+        log.info("参数为空");
+        if (user == null){
+            return ResponBean.ServerResponBean(ServerCodeEnum.PARM_NULL);
+        }
+        if (StringUtils.isEmpty(user.getUsername())){
+            return ResponBean.respon(ServerCodeEnum.PARM_ELE_NULL.code(),"用户名不能为空");
+        }
+        if (user.getOrganizationId() == null){
+            return ResponBean.respon(ServerCodeEnum.PARM_ELE_NULL.code(),"用户所属组织不能为空");
+        }
+        user.setPassword("123456");//默认初始密码
+        user.setMobile(user.getUsername());
+        user.setLocked((short)0);
         passwordHelper.encryptPassword(user);
-        return userMapper.insert(user);
+
+        try{
+            int res = userMapper.insert(user);
+            if (res <= 0){
+                return ResponBean.ServerResponBean(ServerCodeEnum.DB_OPER_ERROR);
+            }
+            return ResponBean.successRespon();
+        }catch (Exception e){
+            e.printStackTrace();
+            return ResponBean.errorResponBean();
+        }
     }
 
     @Override
-    public Integer updateUser(User user) {
+    public ResponBean updateUser(User user) {
         if (user == null || user.getId() == null){
-            return null;
+            return ResponBean.ServerResponBean(ServerCodeEnum.PARM_NULL);
         }
-        return userMapper.updateByPrimaryKey(user);
+        try{
+            int res = userMapper.updateByPrimaryKeySelective(user);
+            if (res <= 0){
+                return ResponBean.ServerResponBean(ServerCodeEnum.DB_OPER_ERROR);
+            }
+            return ResponBean.successRespon();
+        }catch (Exception e){
+            e.printStackTrace();
+            return ResponBean.errorResponBean();
+        }
     }
 
-    @Override
-    public Integer deleteUser(Long userId) {
-        if (userId == null){
-            return null;
-        }
-        return userMapper.deleteByPrimaryKey(userId);
-    }
 
     @Override
     public void changePassword(Long userId, String newPassword) {
@@ -71,8 +102,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> findAll() {
-        return null;
+    public List<User> findAll(UserExample example) {
+        return userMapper.selectByExample(example);
     }
 
     @Override

@@ -1,6 +1,8 @@
 package com.redemption.shawshank.web.service.inter;
 
 import com.redemption.shawshank.pojo.Role;
+import com.redemption.shawshank.pojo.RoleExample;
+import com.redemption.shawshank.web.base.ResponBean;
 
 import java.util.List;
 import java.util.Set;
@@ -12,15 +14,15 @@ import java.util.Set;
  */
 public interface RoleService {
 
-    Integer createRole(Role role);
+    ResponBean createRole(Role role);
 
-    Integer updateRole(Role role);
+    ResponBean updateRole(Role role);
 
-    Integer deleteRole(Long roleId);
+    ResponBean delRole(Long id);
 
     Role findOne(Long roleId);
 
-    List<Role> findAll();
+    List<Role> findAll(RoleExample example);
 
     /**
      * 根据角色id得到角色标识符列表

@@ -56,7 +56,7 @@
        <bean id="formAuthenticationFilter" class="org.apache.shiro.web.filter.authc.FormAuthenticationFilter">
               <property name="usernameParam" value="username"/>
               <property name="passwordParam" value="password"/>
-              <property name="rememberMeParam" value="rememberMe"/>
+              <!--<property name="rememberMeParam" value="rememberMe"/>-->
               <property name="loginUrl" value="/login"/>
        </bean>
 
@@ -82,10 +82,11 @@
               </property>
               <property name="filterChainDefinitions">
                      <value>
+                            /static/** = anon
+                            /files/** = anon
+                            /images/** = anon
                             /login = authc
-                            /logout = logout
-                            /authenticated = authc
-                            /** = user,sysUser
+                            /** = authc,sysUser
                      </value>
               </property>
        </bean>

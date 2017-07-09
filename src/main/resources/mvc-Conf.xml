@@ -20,14 +20,30 @@
               <mvc:argument-resolvers>
                      <bean class="com.redemption.shawshank.utils.method.CurrentUserMethodArgumentResolver"/>
               </mvc:argument-resolvers>
+              <mvc:message-converters>
+                     <bean class="org.springframework.http.converter.StringHttpMessageConverter" />
+                     <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter" >
+                            <property name="supportedMediaTypes">
+                                   <list>
+                                          <value>application/json;charset=UTF-8</value>
+                                          <value>text/html;charset=UTF-8</value>
+                                          <value>text/json;charset=UTF-8</value>
+                                   </list>
+                            </property>
+                     </bean>
+              </mvc:message-converters>
        </mvc:annotation-driven>
+
+
+       <!-- 静态资源映射 -->
+       <mvc:resources mapping="/static/js/*" location="/static/js/"/>
+       <mvc:resources mapping="/static/css/*" location="/static/css/"/>
+
        <!--静态资源-->
        <mvc:default-servlet-handler/>
 
-
        <!-- Jsp视图 -->
        <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-              <property name="order" value="1"/>
               <property name="prefix" value="/WEB-INF/jsp/"/>
               <property name="suffix" value=".jsp"/>
               <property name="contentType" value="text/html; charset=utf-8"/>
@@ -39,4 +55,5 @@
        <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
               <property name="securityManager" ref="securityManager"/>
        </bean>
+
 </beans>

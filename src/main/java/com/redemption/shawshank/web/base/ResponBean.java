@@ -28,12 +28,20 @@ public class ResponBean {
         return new ResponBean(codeEnum.code(),codeEnum.msg());
     }
 
-    public static ResponBean errorResponBean(Object o){
-        return new ResponBean(ServerCodeEnum.ERROR.code(),ServerCodeEnum.ERROR.msg(),o);
+    public static ResponBean errorResponBean(){
+        return new ResponBean(ServerCodeEnum.ERROR.code(),ServerCodeEnum.ERROR.msg());
+    }
+
+    public static ResponBean successRespon(){
+        return new ResponBean(ServerCodeEnum.SUCCESS.code(),ServerCodeEnum.SUCCESS.msg());
     }
 
     public static ResponBean successRespon(Object o){
         return new ResponBean(ServerCodeEnum.SUCCESS.code(),ServerCodeEnum.SUCCESS.msg(),o);
+    }
+
+    public static ResponBean respon(int code,String msg){
+        return new ResponBean(code,msg);
     }
 
     public void setStatus(Integer status) {

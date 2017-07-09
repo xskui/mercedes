@@ -2,6 +2,7 @@ package com.redemption.shawshank.web.service.inter;
 
 import com.redemption.shawshank.pojo.SysResource;
 import com.redemption.shawshank.pojo.SysResourceExample;
+import com.redemption.shawshank.web.base.ResponBean;
 
 import java.util.List;
 import java.util.Set;
@@ -18,21 +19,21 @@ public interface ResourceService {
      * @param sysResource
      * @return
      */
-    int create(SysResource sysResource);
+    ResponBean create(SysResource sysResource);
 
     /**
      * 删除
      * @param resourceId
      * @return
      */
-    int delete(Long resourceId);
+    ResponBean delete(Long resourceId);
 
     /**
      * 更新
      * @param sysResource
      * @return
      */
-    int update(SysResource sysResource);
+    ResponBean update(SysResource sysResource);
 
     /**
      * 查找某一个资源编号

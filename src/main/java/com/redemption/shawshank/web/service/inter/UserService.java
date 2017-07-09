@@ -1,6 +1,8 @@
 package com.redemption.shawshank.web.service.inter;
 
 import com.redemption.shawshank.pojo.User;
+import com.redemption.shawshank.pojo.UserExample;
+import com.redemption.shawshank.web.base.ResponBean;
 
 import java.util.List;
 import java.util.Set;
@@ -16,20 +18,15 @@ public interface UserService {
      * 创建用户
      * @param user
      */
-    Integer createUser(User user);
+    ResponBean createUser(User user);
 
     /**
      * 更新用户
      * @param user
      * @return
      */
-    Integer updateUser(User user);
+    ResponBean updateUser(User user);
 
-    /**
-     * 删除用户
-     * @param userId
-     */
-    Integer deleteUser(Long userId);
 
     /**
      * 修改密码
@@ -49,27 +46,27 @@ public interface UserService {
      * 获取所有的用户
      * @return
      */
-    List<User> findAll();
+    List<User> findAll(UserExample example);
 
     /**
      * 根据用户名查找用户
      * @param username
      * @return
      */
-    public User findByUsername(String username);
+    User findByUsername(String username);
 
     /**
      * 根据用户名查找其角色
      * @param username
      * @return
      */
-    public Set<String> findRoles(String username);
+    Set<String> findRoles(String username);
 
     /**
      * 根据用户名查找其权限
      * @param username
      * @return
      */
-    public Set<String> findPermissions(String username);
+    Set<String> findPermissions(String username);
 
 }
