@@ -1,5 +1,7 @@
 package com.redemption.shawshank.web.controller;
 
+import com.google.gson.Gson;
+import com.redemption.shawshank.Constants;
 import com.redemption.shawshank.pojo.Role;
 import com.redemption.shawshank.pojo.RoleExample;
 import com.redemption.shawshank.utils.enums.ServerCodeEnum;
@@ -17,7 +19,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Author : xingshukui .
@@ -100,11 +104,13 @@ public class RoleController extends BaseController{
     @RequiresPermissions("role:view")
     @RequestMapping("/list")
     @ResponseBody
-    public ResponBean queryAll(){
+    public Map<String, Object> queryAll(){
         RoleExample example = new RoleExample();
         List<Role> list = roleService.findAll(example);
-        if (list.size() == 0)return ResponBean.ServerResponBean(ServerCodeEnum.RESULT_NULL);
-        return ResponBean.successRespon(roleService.findAll(example));
+        Map<String, Object> res = new HashMap<String, Object>();
+        res.put("rows",list);
+        res.put("total",list.size());
+        return res;
 
     }
 }

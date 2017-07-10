@@ -13,7 +13,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>组织管理</title>
-	<jsp:include page="/resources/inc/head.jsp" flush="true"/>
+	<jsp:include page="../../inc/head.jsp" flush="true"/>
 </head>
 <body>
 <div id="main">
@@ -24,21 +24,21 @@
 	</div>
 	<table id="table"></table>
 </div>
-<jsp:include page="/resources/inc/footer.jsp" flush="true"/>
+<jsp:include page="../../inc/footer.jsp" flush="true"/>
 <script>
 var $table = $('#table');
 $(function() {
 	// bootstrap table初始化
 	$table.bootstrapTable({
-		url: '${basePath}/manage/organization/list',
+		url: '${basePath}/organization/list',
 		height: getHeight(),
 		striped: true,
-		search: true,
+		search: false,
 		showRefresh: true,
 		showColumns: true,
 		minimumCountColumns: 2,
 		clickToSelect: true,
-		detailView: true,
+		detailView: false,
 		detailFormatter: 'detailFormatter',
 		pagination: true,
 		paginationLoop: false,
@@ -52,7 +52,7 @@ $(function() {
 		toolbar: '#toolbar',
 		columns: [
 			{field: 'ck', checkbox: true},
-			{field: 'organizationId', title: '编号', sortable: true, align: 'center'},
+			{field: 'id', title: '编号', sortable: true, align: 'center'},
 			{field: 'name', title: '组织名称'},
             {field: 'description', title: '组织描述'},
 			{field: 'action', title: '操作', align: 'center', formatter: 'actionFormatter', events: 'actionEvents', clickToSelect: false}

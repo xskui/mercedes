@@ -13,7 +13,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>权限管理</title>
-	<jsp:include page="/resources/inc/head.jsp" flush="true"/>
+	<jsp:include page="../../inc/head.jsp" flush="true"/>
 </head>
 <body>
 <div id="main">
@@ -24,21 +24,21 @@
 	</div>
 	<table id="table"></table>
 </div>
-<jsp:include page="/resources/inc/footer.jsp" flush="true"/>
+<jsp:include page="../../inc/footer.jsp" flush="true"/>
 <script>
 var $table = $('#table');
 $(function() {
 	// bootstrap table初始化
 	$table.bootstrapTable({
-		url: '${basePath}/manage/permission/list',
+		url: '${basePath}/resource/list',
 		height: getHeight(),
 		striped: true,
-		search: true,
+		search: false,
 		showRefresh: true,
 		showColumns: true,
 		minimumCountColumns: 2,
 		clickToSelect: true,
-		detailView: true,
+		detailView: false,
 		detailFormatter: 'detailFormatter',
 		pagination: true,
 		paginationLoop: false,
@@ -52,15 +52,11 @@ $(function() {
 		toolbar: '#toolbar',
 		columns: [
 			{field: 'ck', checkbox: true},
-			{field: 'permissionId', title: '编号', sortable: true, align: 'center'},
-            {field: 'systemId', title: '所属系统'},
-			{field: 'pid', title: '所属上级'},
+			{field: 'id', title: '编号', sortable: true, align: 'center'},
 			{field: 'name', title: '权限名称'},
 			{field: 'type', title: '类型', formatter: 'typeFormatter'},
-			{field: 'permissionValue', title: '权限值'},
-			{field: 'uri', title: '路径'},
-			{field: 'icon', title: '图标', align: 'center', formatter: 'iconFormatter'},
-			{field: 'status', title: '状态', sortable: true, align: 'center', formatter: 'statusFormatter'},
+			{field: 'permission', title: '权限值'},
+			{field: 'avaliable', title: '状态', sortable: true, align: 'center', formatter: 'statusFormatter'},
 			{field: 'action', title: '操作', align: 'center', formatter: 'actionFormatter', events: 'actionEvents', clickToSelect: false}
 		]
 	});

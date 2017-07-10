@@ -1,5 +1,6 @@
 package com.redemption.shawshank.web.controller;
 
+import com.redemption.shawshank.Constants;
 import com.redemption.shawshank.pojo.SysResource;
 import com.redemption.shawshank.pojo.User;
 import com.redemption.shawshank.utils.annotation.CurrentUser;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Set;
 
@@ -27,7 +29,8 @@ public class IndexController {
     private UserService userService;
 
     @RequestMapping("/")
-    public String index(@CurrentUser User loginUser, Model model) {
+    public String index(HttpServletRequest req, Model model) {
+        User loginUser = (User) req.getAttribute(Constants.CURRENT_USER);
         Set<String> permissions = userService.findPermissions(loginUser.getUsername());
         List<SysResource> menus = resourceService.findmenus(permissions);
         model.addAttribute("menus", menus);

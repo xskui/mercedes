@@ -2,12 +2,16 @@ package com.redemption.shawshank.web.base;
 
 import com.redemption.shawshank.utils.enums.ServerCodeEnum;
 
+import java.io.Serializable;
+
 /**
  * Author : xingshukui .
  * Date : 2017/7/7.
  * Desc :
  */
-public class ResponBean {
+public class ResponBean implements Serializable{
+
+    private static final long serialVersionUID = 1L;
 
     private Integer status;
     private String reason;
@@ -54,5 +58,17 @@ public class ResponBean {
 
     public void setObject(Object object) {
         this.object = object;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public String getReason() {
+        return reason;
+    }
+
+    public Object getObject() {
+        return object;
     }
 }

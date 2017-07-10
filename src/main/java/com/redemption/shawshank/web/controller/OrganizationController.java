@@ -13,7 +13,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Author : xingshukui .
@@ -30,6 +32,11 @@ public class OrganizationController {
     @Autowired
     private OrganizationService organizationService;
 
+    @RequiresPermissions("organization:view")
+    @RequestMapping("/index")
+    public String index(){
+        return "manage/organization/index";
+    }
 
     /**
      * 新增组织信息
@@ -90,13 +97,12 @@ public class OrganizationController {
     @ResponseBody
     @RequiresPermissions("organization:view")
     @RequestMapping("/list")
-    public ResponBean findList(){
+    public Map<String, Object> findList(){
         OrganizationExample example = new OrganizationExample();
         List<Organization> list = organizationService.findAll(example);
-        if (list.size() == 0){
-            log.info("组织数据不存在");
-            return ResponBean.ServerResponBean(ServerCodeEnum.RESULT_NULL);
-        }
-        return ResponBean.successRespon(list);
+        Map<String, Object> res = new HashMap<String, Object>();
+        res.put("rows",list);
+        res.put("total",list.size());
+        return res;
     }
 }

@@ -12,12 +12,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Author : xingshukui .
@@ -34,26 +34,23 @@ public class UserController extends BaseController{
     @Autowired
     private UserService userService;
 
-/*    @RequestMapping("/1")
-    @RequiresPermissions("user2:view")
-    @ResponseBody
-    public String u(){
+    @RequiresPermissions("user:view")
+    @RequestMapping(value = "/index")
+    public String index(){
+        return "manage/user/index";
+    }
 
-        UserExample example = new UserExample();
-        example.createCriteria().andIdEqualTo(1L);
-
-        logger.info("查询user信息开始.....");
-        return userMapper.selectByExample(example).get(0).toString();
-    }*/
+    @RequiresPermissions("user:create")
+    @RequestMapping(value = "/create")
+    public String create(){
+        return "manage/user/create";
+    }
 
     @RequiresPermissions("user:add")
     @RequestMapping(value = "/add",method = RequestMethod.POST)
     @ResponseBody
-    public String addUser(@RequestBody User user){
-
-        //fixme 这里需要规定新增之后的跳转页面
-        userService.createUser(user);
-        return null;
+    public ResponBean addUser(User user){
+        return userService.createUser(user);
     }
 
     /**
@@ -71,15 +68,23 @@ public class UserController extends BaseController{
         return userService.updateUser(u);
     }
 
+    @RequiresPermissions("user:update")
+    @RequestMapping(value = "/preupdate/{id}")
+    public String update(@PathVariable("id") int id,ModelMap modelMap){
+        User user = userService.findOne((long) id);
+        modelMap.put("user",user);
+        return "manage/user/update";
+    }
     /**
      * 更新user
      * @param user
      * @return
      */
-    @RequestMapping("/update")
+    @RequestMapping("/update/{id}")
     @RequiresPermissions("user:update")
     @ResponseBody
-    public ResponBean update(User user){
+    public ResponBean update(@PathVariable("id") int id,User user){
+        user.setId((long) id);
         return userService.updateUser(user);
     }
 
@@ -103,16 +108,16 @@ public class UserController extends BaseController{
      * 查找所有的user
      * @return
      */
-    @RequiresPermissions("usere:view")
-    @RequestMapping("/queryAll")
+    @RequiresPermissions("user:view")
+    @RequestMapping("/list")
     @ResponseBody
-    public ResponBean findAllUser(){
+    public Map<String, Object> findAllUser(){
         UserExample example = new UserExample();
         List<User> list = userService.findAll(example);
-        if (list == null || list.size() == 0){
-            return ResponBean.ServerResponBean(ServerCodeEnum.RESULT_NULL);
-        }
-        return ResponBean.successRespon(list);
+        Map<String, Object> res = new HashMap<String, Object>();
+        res.put("rows",list);
+        res.put("total",list.size());
+        return res;
     }
 
 }

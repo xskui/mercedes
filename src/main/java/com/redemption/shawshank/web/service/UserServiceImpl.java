@@ -43,7 +43,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public ResponBean createUser(User user) {
         //密码
-        log.info("参数为空");
         if (user == null){
             return ResponBean.ServerResponBean(ServerCodeEnum.PARM_NULL);
         }

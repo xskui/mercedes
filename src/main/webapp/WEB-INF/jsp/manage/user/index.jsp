@@ -13,35 +13,35 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>用户管理</title>
-	<jsp:include page="/resources/inc/head.jsp" flush="true"/>
+	<jsp:include page="../../inc/head.jsp" flush="true"/>
 </head>
 <body>
 <div id="main">
 	<div id="toolbar">
-		<shiro:hasPermission name="upms:user:create"><a class="waves-effect waves-button" href="javascript:;" onclick="createAction()"><i class="zmdi zmdi-plus"></i> 新增用户</a></shiro:hasPermission>
-		<shiro:hasPermission name="upms:user:update"><a class="waves-effect waves-button" href="javascript:;" onclick="updateAction()"><i class="zmdi zmdi-edit"></i> 编辑用户</a></shiro:hasPermission>
-		<shiro:hasPermission name="upms:user:delete"><a class="waves-effect waves-button" href="javascript:;" onclick="deleteAction()"><i class="zmdi zmdi-close"></i> 删除用户</a></shiro:hasPermission>
-		<shiro:hasPermission name="upms:user:organization"><a class="waves-effect waves-button" href="javascript:;" onclick="organizationAction()"><i class="zmdi zmdi-accounts-list"></i> 用户组织</a></shiro:hasPermission>
-		<shiro:hasPermission name="upms:user:role"><a class="waves-effect waves-button" href="javascript:;" onclick="roleAction()"><i class="zmdi zmdi-accounts"></i> 用户角色</a></shiro:hasPermission>
-		<shiro:hasPermission name="upms:user:permission"><a class="waves-effect waves-button" href="javascript:;" onclick="permissionAction()"><i class="zmdi zmdi-key"></i> 用户权限</a></shiro:hasPermission>
+		<shiro:hasPermission name="user:create"><a class="waves-effect waves-button" href="javascript:;" onclick="createAction()"><i class="zmdi zmdi-plus"></i> 新增用户</a></shiro:hasPermission>
+		<shiro:hasPermission name="user:update"><a class="waves-effect waves-button" href="javascript:;" onclick="updateAction()"><i class="zmdi zmdi-edit"></i> 编辑用户</a></shiro:hasPermission>
+		<shiro:hasPermission name="user:update"><a class="waves-effect waves-button" href="javascript:;" onclick="deleteAction()"><i class="zmdi zmdi-close"></i> 删除用户</a></shiro:hasPermission>
+		<shiro:hasPermission name="organization"><a class="waves-effect waves-button" href="javascript:;" onclick="organizationAction()"><i class="zmdi zmdi-accounts-list"></i> 用户组织</a></shiro:hasPermission>
+		<shiro:hasPermission name="user:role"><a class="waves-effect waves-button" href="javascript:;" onclick="roleAction()"><i class="zmdi zmdi-accounts"></i> 用户角色</a></shiro:hasPermission>
+		<shiro:hasPermission name="user:permission"><a class="waves-effect waves-button" href="javascript:;" onclick="permissionAction()"><i class="zmdi zmdi-key"></i> 用户权限</a></shiro:hasPermission>
 	</div>
 	<table id="table"></table>
 </div>
-<jsp:include page="/resources/inc/footer.jsp" flush="true"/>
+<jsp:include page="../../inc/footer.jsp" flush="true"/>
 <script>
 var $table = $('#table');
 $(function() {
 	// bootstrap table初始化
 	$table.bootstrapTable({
-		url: '${basePath}/manage/user/list',
+		url: '${basePath}/user/list',
 		height: getHeight(),
 		striped: true,
-		search: true,
+		search: false,
 		showRefresh: true,
 		showColumns: true,
 		minimumCountColumns: 2,
 		clickToSelect: true,
-		detailView: true,
+		detailView: false,
 		detailFormatter: 'detailFormatter',
 		pagination: true,
 		paginationLoop: false,
@@ -55,11 +55,10 @@ $(function() {
 		toolbar: '#toolbar',
 		columns: [
 			{field: 'ck', checkbox: true},
-			{field: 'userId', title: '编号', sortable: true, align: 'center'},
+			{field: 'id', title: '编号', sortable: true, align: 'center'},
             {field: 'username', title: '帐号'},
 			{field: 'realname', title: '姓名'},
-			{field: 'avatar', title: '头像', align: 'center', formatter: 'avatarFormatter'},
-			{field: 'phone', title: '电话'},
+			{field: 'mobile', title: '电话'},
 			{field: 'email', title: '邮箱'},
 			{field: 'sex', title: '性别', formatter: 'sexFormatter'},
 			{field: 'locked', title: '状态', sortable: true, align: 'center', formatter: 'lockedFormatter'},
@@ -102,10 +101,9 @@ function createAction() {
 	createDialog = $.dialog({
 		animationSpeed: 300,
 		title: '新增用户',
-		content: 'url:${basePath}/manage/user/create',
+		content: 'url:${basePath}/user/create',
 		onContentReady: function () {
 			initMaterialInput();
-            initUploader();
 		}
 	});
 }
@@ -130,7 +128,7 @@ function updateAction() {
 		updateDialog = $.dialog({
 			animationSpeed: 300,
 			title: '编辑用户',
-			content: 'url:${basePath}/manage/user/update/' + rows[0].userId,
+			content: 'url:${basePath}/user/update/' + rows[0].userId,
 			onContentReady: function () {
 				initMaterialInput();
                 initUploader();

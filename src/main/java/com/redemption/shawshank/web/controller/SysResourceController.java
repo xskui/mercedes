@@ -13,7 +13,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Author : xingshukui .
@@ -29,6 +31,12 @@ public class SysResourceController {
 
     @Autowired
     private ResourceService resourceService;
+
+    @RequestMapping("/index")
+    @RequiresPermissions("resource:view")
+    public String index(){
+        return "manage/permission/index";
+    }
 
     /**
      * 资源新增
@@ -79,13 +87,12 @@ public class SysResourceController {
     @RequestMapping("/list")
     @ResponseBody
     @RequiresPermissions("resource:view")
-    public ResponBean list(){
+    public Map<String, Object> list(){
         SysResourceExample example = new SysResourceExample();
-        List<SysResource> res = resourceService.findAll(example);
-        if (res == null || res.size() == 0){
-            log.info("查询记录为空");
-            return ResponBean.ServerResponBean(ServerCodeEnum.RESULT_NULL);
-        }
-        return ResponBean.successRespon(res);
+        List<SysResource> list = resourceService.findAll(example);
+        Map<String, Object> res = new HashMap<String, Object>();
+        res.put("rows",list);
+        res.put("total",list.size());
+        return res;
     }
 }
